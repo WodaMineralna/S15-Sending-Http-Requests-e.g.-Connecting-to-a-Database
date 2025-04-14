@@ -6,14 +6,13 @@ export default function AvailablePlaces({ onSelectPlace }) {
   const [availablePlaces, setAvailablePlaces] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/places")
-      .then((response) => { // * metoda ktora definiuje funkcje ktora jest wykonywana,
-      // * kiedy nasz Promise jest resolved i TYLKO wtedy, kiedy mamy nasz response
-        return response.json(); // ^ metoda .json() zwraca kolejny Promise
-      })
-      .then((resData) => {
-        setAvailablePlaces(resData.places);
-      });
+    async function fetchPlaces() {
+      const response = await fetch("http://localhost:3000/places");
+      const resData = await response.json();
+      setAvailablePlaces(resData.places);
+    }
+
+    fetchPlaces();
   }, []);
 
   return (
