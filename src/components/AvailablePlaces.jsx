@@ -3,20 +3,38 @@ import { useState, useEffect } from "react";
 import Places from "./Places.jsx";
 
 export default function AvailablePlaces({ onSelectPlace }) {
-  const [isFetching, setIsFetching] = useState(false)
+  const [isFetching, setIsFetching] = useState(false);
   const [availablePlaces, setAvailablePlaces] = useState([]);
+  const [error, setError] = useState(second);
 
   useEffect(() => {
     async function fetchPlaces() {
-      setIsFetching(true)
-      const response = await fetch("http://localhost:3000/places");
-      const resData = await response.json();
-      setAvailablePlaces(resData.places);
-      setIsFetching(false)
+      setIsFetching(true);
+
+      try {
+        const response = await fetch("http://localhost:3000/places");
+        const resData = await response.json();
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch places");
+        }
+
+        setAvailablePlaces(resData.places); // ! musimy przeniesc ten state update tutaj
+        // ! tutaj dziala i wiemy ze UDALO SIE zfetchowac dane, poniewaz przeszlismy przez powyzszy if-check
+      } catch (error) { // error - object
+        setError(error)
+      }
+
+      setIsFetching(false); // ^ to tutaj zostaje, poniewaz no matter the result - chcemy zakonczyc ten state
+      // ^ mozemy dostac error, ale nie fetchujemy go juz
     }
 
     fetchPlaces();
   }, []);
+
+  if(error) {
+    
+  }
 
   return (
     <Places
