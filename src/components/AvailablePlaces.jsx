@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import Places from "./Places.jsx";
+import ErrorPage from "./Error.jsx";
 
 export default function AvailablePlaces({ onSelectPlace }) {
   const [isFetching, setIsFetching] = useState(false);
@@ -21,8 +22,12 @@ export default function AvailablePlaces({ onSelectPlace }) {
 
         setAvailablePlaces(resData.places); // ! musimy przeniesc ten state update tutaj
         // ! tutaj dziala i wiemy ze UDALO SIE zfetchowac dane, poniewaz przeszlismy przez powyzszy if-check
-      } catch (error) { // error - object
-        setError(error)
+      } catch (error) {
+        // error - object
+        setError({
+          message:
+            error.message || "Could not fetch places, please try again later",
+        });
       }
 
       setIsFetching(false); // ^ to tutaj zostaje, poniewaz no matter the result - chcemy zakonczyc ten state
@@ -32,8 +37,8 @@ export default function AvailablePlaces({ onSelectPlace }) {
     fetchPlaces();
   }, []);
 
-  if(error) {
-    
+  if (error) {
+    return <ErrorPage title="An error occured!" message={error.message} />;
   }
 
   return (
