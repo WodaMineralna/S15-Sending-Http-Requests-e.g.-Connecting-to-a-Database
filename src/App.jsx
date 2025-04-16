@@ -52,8 +52,23 @@ function App() {
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current.id)
     );
 
+    // * niby usuwamy nasz userPLace, ale robimy to nieoptymalnie
+    // ! poniewaz zamiast robic HTTP Delete, to robimy HTTP Put - 1 element
+    // i moga byc problemy, jak tych elementow bedzie duzo wiecej
+    try {
+      await updateUserPlaces(
+        userPlaces.filter((place) => place.id !== selectedPlace.current.id)
+      );
+    } catch (error) {
+      setUserPlaces(userPlaces); // ! rollback - jezeli cos poszlo nie tak, to nie usuwamy tego miejsca z userPlaces
+      setErrorUpdatingPlaces({
+        message:
+          error.message || "Could not delete place, please try again later",
+      });
+    }
+
     setModalIsOpen(false);
-  }, []);
+  }, [userPlaces]);
 
   function handleCloseError() {
     setErrorUpdatingPlaces(null);
