@@ -2,9 +2,9 @@
 
 Practice code for Section 15 - Sending Http Requests (e.g. Connecting to a Database), part of the course "React - The Complete Guide (incl. Redux)" by Maximilian Schwarzmüller.
 
-This project covers
+This project covers:
 - Fetch data from REST APIs
-- Loading and error states with fetch or Axios
+- Loading and error states with fetch()
   
 # Project type
 Implemented as part of a guided course project, with additional features and customizations added independently.
@@ -13,7 +13,7 @@ Implemented as part of a guided course project, with additional features and cus
 - React
 - JavaScript (ES6+)
 - Build tool - Vite
-- Axios
+- REST APIs
 ## How to Run
 
 ```bash
