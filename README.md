@@ -5,8 +5,9 @@ Practice code for Section 15 - Sending Http Requests (e.g. Connecting to a Datab
 This project covers
 - Fetch data from REST APIs
 - Loading and error states with fetch or Axios
-Project type
-- Based on a guided project
+  
+# Project type
+Implemented as part of a guided course project, with additional features and customizations added independently.
 
 ## Tech Stack
 - React
